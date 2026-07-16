@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --accent: #1fbfae; --accent-soft: rgba(31,191,174,.14); }
+    html { scroll-behavior: smooth; background: #070b0a; color-scheme: dark; }
+    body { margin: 0; background: #070b0a; color: #e8f0ee; font-family: 'Sora', -apple-system, 'Segoe UI', sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { color: #7fe6da; }
+    ::selection { background: var(--accent); color: #06110f; }
+  </style>
+</helmet>
+
+<!-- ============ NAV ============ -->
+<nav style="position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px clamp(20px,5vw,64px);background:rgba(7,11,10,.72);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.06)">
+  <a href="index.html" style="display:flex;align-items:center;gap:10px;color:#e8f0ee;font-weight:800;letter-spacing:.06em;font-size:18px">
+    FILIA <span style="font-weight:400;color:#9fb5b1;letter-spacing:.2em;font-size:13px">PLAYER</span>
+    <span style="width:0;height:0;border-left:9px solid var(--accent);border-top:6px solid transparent;border-bottom:6px solid transparent"></span>
+  </a>
+  <a href="index.html" style="color:#9fb5b1;font-size:14px" style-hover="color:#ffffff">â† Volver al inicio</a>
+</nav>
+
+<!-- Espaciador para la barra fija -->
+<div style="height:69px"></div>
+
+<!-- ============ ENCABEZADO ============ -->
+<header style="padding:clamp(48px,7vw,90px) clamp(20px,5vw,64px) clamp(28px,4vw,48px)">
+  <div style="max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:16px">
+    <span style="align-self:flex-start;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:600;border:1px solid rgba(31,191,174,.35);background:var(--accent-soft);padding:8px 14px;border-radius:999px">Legal</span>
+    <h1 style="margin:0;font-size:clamp(34px,5vw,54px);font-weight:800;letter-spacing:-.02em;line-height:1.08">PolÃ­tica de Privacidad</h1>
+    <p style="margin:0;color:#8fa5a1;font-size:15px;line-height:1.7">Filia Player â€” desarrollada por Sorelia Labs<br>
+    <span style="color:#5f7571;font-size:13px">Fecha de entrada en vigor: 7 de julio de 2026</span></p>
+    <div style="border:1px solid rgba(31,191,174,.3);background:var(--accent-soft);border-radius:16px;padding:18px 22px;color:#c3d4d0;font-size:15px;line-height:1.7">
+      En resumen: <strong style="color:#ffffff">tu mÃºsica y tus datos son tuyos</strong>. Sin cuentas, sin publicidad, sin rastreadores, sin analÃ­tica de terceros. Nada sale de tu dispositivo.
+    </div>
+  </div>
+</header>
+
+<!-- ============ CONTENIDO ============ -->
+<main style="padding:0 clamp(20px,5vw,64px) clamp(56px,8vw,100px)">
+  <div style="max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:44px">
+
+    <section style="display:flex;flex-direction:column;gap:12px">
+      <h2 style="margin:0;font-size:22px;font-weight:700;display:flex;gap:14px;align-items:baseline"><span style="color:var(--accent);font-family:monospace;font-size:16px">01</span>IntroducciÃ³n</h2>
+      <p style="margin:0;color:#aebfbc;font-size:15px;line-height:1.8">Esta PolÃ­tica de Privacidad describe cÃ³mo Filia Player trata la informaciÃ³n cuando utilizas la aplicaciÃ³n. Filia Player es un reproductor de mÃºsica local para Android, diseÃ±ado desde su origen bajo un principio muy simple: tu mÃºsica y tus datos son tuyos. La aplicaciÃ³n funciona sin cuentas de usuario, sin publicidad, sin rastreadores y sin analÃ­tica de terceros.</p>
+    </section>
+
+    <section style="display:flex;flex-direction:column;gap:12px">
+      <h2 style="margin:0;font-size:22px;font-weight:700;display:flex;gap:14px;align-items:baseline"><span style="color:var(--accent);font-family:monospace;font-size:16px">02</span>Datos que no recopilamos</h2>
+      <p style="margin:0;color:#aebfbc;font-size:15px;line-height:1.8">Filia Player no recopila, almacena, comparte ni vende ningÃºn dato personal. En concreto:</p>
+      <ul style="margin:0;padding-left:22px;color:#aebfbc;font-size:15px;line-height:2">
+        <li>No requiere registro ni inicio de sesiÃ³n de ningÃºn tipo.</li>
+        <li>No solicita tu nombre, correo electrÃ³nico, ubicaciÃ³n ni ningÃºn otro dato identificativo.</li>
+        <li>No incluye publicidad ni SDKs publicitarios.</li>
+        <li>No incorpora herramientas de analÃ­tica ni de seguimiento de terceros.</li>
+        <li>No enviamos ninguna informaciÃ³n a servidores de Sorelia Labs.</li>
+      </ul>
+    </section>
+
+    <section style="display:flex;flex-direction:column;gap:12px">
+      <h2 style="margin:0;font-size:22px;font-weight:700;display:flex;gap:14px;align-items:baseline"><span style="color:var(--accent);font-family:monospace;font-size:16px">03</span>Datos que permanecen en tu dispositivo</h2>
+      <p style="margin:0;color:#aebfbc;font-size:15px;line-height:1.8">Toda la informaciÃ³n generada por el uso de la aplicaciÃ³n se guarda exclusivamente en tu dispositivo y nunca sale de Ã©l:</p>
+      <ul style="margin:0;padding-left:22px;color:#aebfbc;font-size:15px;line-height:2">
+        <li>Tus preferencias y ajustes de la aplicaciÃ³n.</li>
+        <li>Tus listas de reproducciÃ³n, favoritos y estadÃ­sticas de reproducciÃ³n.</li>
+        <li>La cachÃ© de carÃ¡tulas, letras e imÃ¡genes descargadas.</li>
+      </ul>
+      <p style="margin:0;color:#aebfbc;font-size:15px;line-height:1.8">Si desinstalas la aplicaciÃ³n, toda esta informaciÃ³n se elimina junto con ella.</p>
+    </section>
+
+    <section style="display:flex;flex-direction:column;gap:16px">
+      <h2 style="margin:0;font-size:22px;font-weight:700;display:flex;gap:14px;align-items:baseline"><span style="color:var(--accent);font-family:monospace;font-size:16px">04</span>Conexiones a servicios de terceros</h2>
+      <p style="margin:0;color:#aebfbc;font-size:15px;line-height:1.8">Para ofrecer determinadas funciones opcionales, la aplicaciÃ³n realiza consultas a servicios externos. Estas consultas envÃ­an Ãºnicamente los datos mÃ­nimos imprescindibles de la canciÃ³n (tÃ­tulo, artista y Ã¡lbum), nunca informaciÃ³n personal ni identificadores de tu dispositivo:</p>
+      <div style="border:1px solid rgba(255,255,255,.1);border-radius:16px;overflow:hidden">
+        <div style="display:grid;grid-template-columns:1fr 1fr;background:rgba(31,191,174,.08);border-bottom:1px solid rgba(255,255,255,.1)">
+          <span style="padding:14px 20px;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)">FunciÃ³n</span>
+          <span style="padding:14px 20px;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)">Servicio consultado</span>
+        </div>
+        <sc-for list="{{ services }}" as="s" hint-placeholder-count="6">
+          <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid rgba(255,255,255,.06)">
+            <span style="padding:14px 20px;font-size:14px;color:#e8f0ee">{{ s.fn }}</span>
+            <span style="padding:14px 20px;font-size:14px;color:#8fa5a1">{{ s.svc }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <p style="margin:0;color:#aebfbc;font-size:15px;line-height:1.8">Estas solicitudes se realizan directamente desde tu dispositivo al servicio correspondiente. Sorelia Labs no actÃºa como intermediario, por lo que no registra, intercepta ni almacena ninguna de estas consultas. El uso de cada servicio externo estÃ¡ sujeto a la polÃ­tica de privacidad de su respectivo proveedor.</p>
+    </section>
+
+    <section style="display:flex;flex-direction:column;gap:12px">
+      <h2 style="margin:0;font-size:22px;font-weight:700;display:flex;gap:14px;align-items:baseline"><span style="color:var(--accent);font-family:monospace;font-size:16px">05</span>Permisos que solicita la aplicaciÃ³n</h2>
+      <p style="margin:0;color:#aebfbc;font-size:15px;line-height:1.8">Filia Player solicita Ãºnicamente los permisos necesarios para su funcionamiento:</p>
+      <ul style="margin:0;padding-left:22px;color:#aebfbc;font-size:15px;line-height:2">
+        <li><strong style="color:#e8f0ee">Lectura de la biblioteca musical:</strong> imprescindible para encontrar y reproducir los archivos de audio almacenados en tu dispositivo.</li>
+        <li><strong style="color:#e8f0ee">Notificaciones:</strong> para mostrar los controles de reproducciÃ³n en la barra de notificaciones y en la pantalla de bloqueo.</li>
+        <li><strong style="color:#e8f0ee">Bluetooth:</strong> Ãºnicamente para mostrar el nombre del dispositivo de audio conectado (auriculares, altavoces).</li>
+        <li><strong style="color:#e8f0ee">ExclusiÃ³n de la optimizaciÃ³n de baterÃ­a:</strong> para garantizar que la reproducciÃ³n de mÃºsica no se interrumpa cuando la aplicaciÃ³n estÃ¡ en segundo plano.</li>
+      </ul>
+      <p style="margin:0;color:#aebfbc;font-size:15px;line-height:1.8">Ninguno de estos permisos se utiliza para recopilar informaciÃ³n personal.</p>
+    </section>
+
+    <section style="display:flex;flex-direction:column;gap:12px">
+      <h2 style="margin:0;font-size:22px;font-weight:700;display:flex;gap:14px;align-items:baseline"><span style="color:var(--accent);font-family:monospace;font-size:16px">06</span>Menores de edad</h2>
+      <p style="margin:0;color:#aebfbc;font-size:15px;line-height:1.8">La aplicaciÃ³n no estÃ¡ dirigida a menores de 13 aÃ±os. En cualquier caso, dado que Filia Player no recopila datos de ningÃºn usuario, ningÃºn dato de menores es recopilado ni tratado.</p>
+    </section>
+
+    <section style="display:flex;flex-direction:column;gap:12px">
+      <h2 style="margin:0;font-size:22px;font-weight:700;display:flex;gap:14px;align-items:baseline"><span style="color:var(--accent);font-family:monospace;font-size:16px">07</span>Cambios en esta polÃ­tica</h2>
+      <p style="margin:0;color:#aebfbc;font-size:15px;line-height:1.8">Si en el futuro esta polÃ­tica se modifica, la nueva versiÃ³n se publicarÃ¡ en esta misma pÃ¡gina, actualizando la fecha de entrada en vigor. Cualquier cambio relevante se comunicarÃ¡ a travÃ©s de las notas de versiÃ³n de la aplicaciÃ³n.</p>
+    </section>
+
+    <section style="display:flex;flex-direction:column;gap:12px">
+      <h2 style="margin:0;font-size:22px;font-weight:700;display:flex;gap:14px;align-items:baseline"><span style="color:var(--accent);font-family:monospace;font-size:16px">08</span>Contacto</h2>
+      <p style="margin:0;color:#aebfbc;font-size:15px;line-height:1.8">Si tienes cualquier duda o consulta sobre esta PolÃ­tica de Privacidad, puedes escribirnos a:</p>
+      <div style="border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:20px 24px;display:flex;flex-direction:column;gap:6px;background:rgba(255,255,255,.02)">
+        <span style="font-weight:700;color:#e8f0ee">Sorelia Labs</span>
+        <a href="mailto:kevingmp18@gmail.com?subject=Filia%20Player%20%E2%80%94%20Pol%C3%ADtica%20de%20Privacidad" style="font-size:15px">kevingmp18@gmail.com</a>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer style="border-top:1px solid rgba(255,255,255,.07);padding:28px clamp(20px,5vw,64px);background:#060909">
+  <div style="max-width:760px;margin:0 auto;display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between">
+    <span style="display:flex;align-items:center;gap:8px;font-weight:800;letter-spacing:.06em;font-size:15px;color:#e8f0ee">FILIA <span style="font-weight:400;color:#9fb5b1;letter-spacing:.2em;font-size:11px">PLAYER</span></span>
+    <a href="index.html" style="color:#8fa5a1;font-size:13px" style-hover="color:#ffffff">â† Volver al inicio</a>
+    <span style="color:#5f7571;font-size:12px">Â© 2026 Sorelia Labs. Todos los derechos reservados.</span>
+  </div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      services: [
+        { fn: 'CarÃ¡tulas de Ã¡lbumes', svc: 'API de Deezer' },
+        { fn: 'Letras de canciones', svc: 'lrclib.net y LyricsPlus' },
+        { fn: 'BiografÃ­as y datos de artistas', svc: 'TheAudioDB y Wikipedia' },
+        { fn: 'TraducciÃ³n de letras', svc: 'Google Translate' },
+        { fn: 'VÃ­deos musicales', svc: 'YouTube / Invidious' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
