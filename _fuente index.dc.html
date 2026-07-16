@@ -38,6 +38,25 @@
     @keyframes drift { 0% { transform: translate(0,0); } 50% { transform: translate(40px,-30px); } 100% { transform: translate(0,0); } }
     /* Responsive: en pantallas pequeñas la barra muestra solo logo + Descargar */
     @media (max-width: 760px) { #nav-links a[data-nav] { display: none; } }
+    /* ===== Ajustes exclusivos para teléfonos ===== */
+    @media (max-width: 700px) {
+      /* Botones de descarga a lo ancho, más cómodos de tocar */
+      #descargar { width: 100%; }
+      #descargar a { flex: 1 1 100%; justify-content: center; box-sizing: border-box; }
+      /* Fila de specs centrada bajo los botones */
+      .hero-stats { justify-content: center !important; gap: 14px 24px !important; width: 100%; }
+      /* Sección tablets: dispositivos apilados en vez de comprimidos lado a lado */
+      [data-reveal="tab-shot"] > div:last-child { flex-direction: column !important; align-items: center !important; gap: 22px; }
+      [data-reveal="tab-shot"] > div:last-child img:first-child { width: 100% !important; }
+      [data-reveal="tab-shot"] > div:last-child img:last-child { width: 52% !important; margin-left: 0 !important; }
+      /* Footer en columna y centrado */
+      .footer-bottom { flex-direction: column !important; justify-content: center !important; text-align: center; gap: 20px !important; }
+      .footer-bottom > div:last-child { flex-direction: column !important; align-items: center !important; }
+      .footer-bottom > div:last-child > div { align-items: center !important; }
+      /* Titulares un poco más contenidos para que respiren */
+      h1 { font-size: clamp(40px, 11vw, 56px) !important; }
+      h2 { font-size: clamp(27px, 7.5vw, 36px) !important; }
+    }
   </style>
   <script src="./image-slot.js"></script>
 </helmet>
@@ -98,7 +117,7 @@
           </a>
         </sc-if>
       </div>
-      <div style="display:flex;gap:28px;flex-wrap:wrap;color:#7d938f;font-size:13px">
+      <div class="hero-stats" style="display:flex;gap:28px;flex-wrap:wrap;color:#7d938f;font-size:13px">
         <span><strong style="color:#e8f0ee;font-size:16px">32-bit</strong> / 384 kHz</span>
         <span><strong style="color:#e8f0ee;font-size:16px">DSD</strong> nativo</span>
         <span><strong style="color:#e8f0ee;font-size:16px">0</strong> anuncios</span>
@@ -109,8 +128,8 @@
     <div data-reveal="hero-shot" style="display:flex;justify-content:center;opacity:0;transform:translateY(24px);transition:opacity .8s ease .15s, transform .8s ease .15s">
       <div style="position:relative;animation:floaty 7s ease-in-out infinite">
         <div style="position:absolute;inset:8% 4%;background:radial-gradient(circle, rgba(31,191,174,.28), transparent 70%);filter:blur(40px);pointer-events:none"></div>
-        <div style="position:relative;width:min(320px,78vw);aspect-ratio:1/2;border-radius:38px;overflow:hidden;box-shadow:0 40px 90px rgba(0,0,0,.6)">
-          <img src="uploads/Menu.png" alt="Captura principal de Filia Player" style="width:100%;height:100%;object-fit:cover;display:block">
+        <div style="position:relative;width:min(320px,78vw);aspect-ratio:887/1774">
+          <img src="uploads/Menu.png" alt="Captura principal de Filia Player" style="width:100%;height:100%;object-fit:contain;display:block;filter:drop-shadow(0 40px 90px rgba(0,0,0,.6))">
         </div>
       </div>
     </div>
@@ -415,7 +434,7 @@
         </sc-if>
       </div>
     </div>
-    <div style="display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,.06);padding-top:28px">
+    <div class="footer-bottom" style="display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,.06);padding-top:28px">
       <span style="display:flex;align-items:center;gap:8px;font-weight:800;letter-spacing:.06em;font-size:15px">FILIA <span style="font-weight:400;color:#9fb5b1;letter-spacing:.2em;font-size:11px">PLAYER</span></span>
       <div style="display:flex;flex-wrap:wrap;gap:22px;font-size:13px">
         <!-- REEMPLAZA: enlaces reales -->
@@ -551,6 +570,16 @@ class Component extends DCLogic {
     };
     window.addEventListener('scroll', this.onScrollSpy, { passive: true });
     this.updateScrollSpy();
+    // Red de seguridad: si el IntersectionObserver no disparó (navegadores
+    // raros, ahorro de batería, etc.), revelar todo tras unos segundos para
+    // que ninguna sección quede invisible.
+    this.revealSafety = setTimeout(() => {
+      document.querySelectorAll('[data-reveal]').forEach((el) => {
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+        this.revealed.add(el.getAttribute('data-reveal'));
+      });
+    }, 6000);
   }
 
   updateScrollSpy() {
@@ -825,6 +854,7 @@ class Component extends DCLogic {
   componentWillUnmount() {
     if (this.io) this.io.disconnect();
     clearInterval(this.revealPoll);
+    clearTimeout(this.revealSafety);
     window.removeEventListener('scroll', this.onScrollSpy);
     cancelAnimationFrame(this.spyRaf);
     cancelAnimationFrame(this.raf);
