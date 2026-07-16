@@ -45,6 +45,8 @@
       #descargar a { flex: 1 1 100%; justify-content: center; box-sizing: border-box; }
       /* Fila de specs centrada bajo los botones */
       .hero-stats { justify-content: center !important; gap: 14px 24px !important; width: 100%; }
+      /* Sección letras: el texto primero y el teléfono debajo */
+      [data-reveal="lyr-shot"] { order: 1 !important; }
       /* Sección tablets: dispositivos apilados en vez de comprimidos lado a lado */
       [data-reveal="tab-shot"] > div:last-child { flex-direction: column !important; align-items: center !important; gap: 22px; }
       [data-reveal="tab-shot"] > div:last-child img:first-child { width: 100% !important; }
