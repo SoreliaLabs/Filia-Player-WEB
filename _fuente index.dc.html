@@ -55,6 +55,8 @@
       .footer-bottom { flex-direction: column !important; justify-content: center !important; text-align: center; gap: 20px !important; }
       .footer-bottom > div:last-child { flex-direction: column !important; align-items: center !important; }
       .footer-bottom > div:last-child > div { align-items: center !important; }
+      /* Carrusel de capturas: sin imán de ajuste en táctil (atrapaba el scroll vertical) */
+      [data-reveal="gal-row"] { scroll-snap-type: none !important; }
       /* Titulares un poco más contenidos para que respiren */
       h1 { font-size: clamp(40px, 11vw, 56px) !important; }
       h2 { font-size: clamp(27px, 7.5vw, 36px) !important; }
@@ -351,7 +353,7 @@
     </div>
 
     <!-- Carrusel: las dos primeras ya llevan tus capturas; arrastra imágenes a las demás -->
-    <div ref="{{ galRef }}" data-reveal="gal-row" style="display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;padding:20px clamp(20px,5vw,64px) 34px;scrollbar-width:none;opacity:0;transform:translateY(24px);transition:opacity .8s ease .1s, transform .8s ease .1s">
+    <div ref="{{ galRef }}" data-reveal="gal-row" style="display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x proximity;overscroll-behavior-x:contain;padding:20px clamp(20px,5vw,64px) 34px;scrollbar-width:none;opacity:0;transform:translateY(24px);transition:opacity .8s ease .1s, transform .8s ease .1s">
       <sc-for list="{{ shots }}" as="s" hint-placeholder-count="5">
         <div style="flex:0 0 auto;scroll-snap-align:center;display:flex;flex-direction:column;gap:14px;align-items:center;transition:transform .35s ease" style-hover="transform:translateY(-10px) scale(1.02)">
           <div style="width:min(250px,68vw);aspect-ratio:1/2;border-radius:30px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.55)">
