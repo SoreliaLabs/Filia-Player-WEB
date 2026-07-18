@@ -53,6 +53,21 @@
       [data-reveal="eq-shot"] [style*="aspect-ratio"], [data-reveal="lyr-shot"] [style*="aspect-ratio"] { width: min(272px, 72vw) !important; }
       /* Puntos indicadores y pista de deslizar, solo en táctil */
       .swipe-hint { display: flex !important; }
+      /* Ficha técnica de formatos: hoja inferior fija, visible al instante */
+      .fmt-detail {
+        position: fixed !important;
+        left: 10px; right: 10px; bottom: 10px;
+        z-index: 70;
+        max-height: 68vh;
+        overflow-y: auto;
+        background: #0b1514 !important;
+        box-shadow: 0 -14px 44px rgba(0,0,0,.65);
+        animation: fichaUp .28s ease;
+      }
+      @keyframes fichaUp {
+        from { transform: translateY(26px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+      }
       /* Sección tablets: dispositivos apilados en vez de comprimidos lado a lado */
       [data-reveal="tab-shot"] > div:last-child { flex-direction: column !important; align-items: center !important; gap: 22px; }
       [data-reveal="tab-shot"] > div:last-child img:first-child { width: 100% !important; }
@@ -424,7 +439,7 @@
       </sc-for>
       <!-- Ficha técnica del formato seleccionado -->
       <sc-if value="{{ hasFmtDetail }}" hint-placeholder-val="{{ false }}">
-        <div style="border:1px solid rgba(31,191,174,.35);border-radius:22px;background:linear-gradient(160deg, rgba(31,191,174,.08), rgba(255,255,255,.02) 45%);padding:clamp(22px,3.5vw,34px);display:flex;flex-direction:column;gap:20px">
+        <div class="fmt-detail" style="border:1px solid rgba(31,191,174,.35);border-radius:22px;background:linear-gradient(160deg, rgba(31,191,174,.08), rgba(255,255,255,.02) 45%);padding:clamp(22px,3.5vw,34px);display:flex;flex-direction:column;gap:20px">
           <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap">
             <div style="display:flex;flex-direction:column;gap:6px">
               <span style="font-family:monospace;font-size:22px;font-weight:700;color:var(--accent)">{{ fmtDetail.name }}</span>
