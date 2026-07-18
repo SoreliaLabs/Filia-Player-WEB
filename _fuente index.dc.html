@@ -57,6 +57,20 @@
       .footer-bottom > div:last-child > div { align-items: center !important; }
       /* Carrusel de capturas: sin imán de ajuste en táctil (atrapaba el scroll vertical) */
       [data-reveal="gal-row"] { scroll-snap-type: none !important; }
+      /* Selectores de modo (Ecualizador y Letras): chips compactos en fila,
+         pegados a la imagen para que el cambio se vea al tocar */
+      [data-reveal="eq-copy"] > div:last-child,
+      [data-reveal="lyr-copy"] > div:nth-child(2) { flex-direction: row !important; gap: 8px !important; }
+      [data-reveal="eq-copy"] > div:last-child button,
+      [data-reveal="lyr-copy"] > div:nth-child(2) button { flex: 1 1 0 !important; padding: 12px 8px !important; align-items: center !important; justify-content: center !important; }
+      [data-reveal="eq-copy"] > div:last-child button > span:first-child,
+      [data-reveal="lyr-copy"] > div:nth-child(2) button > span:first-child { font-size: 13.5px !important; text-align: center; line-height: 1.35; }
+      [data-reveal="eq-copy"] > div:last-child button span span,
+      [data-reveal="lyr-copy"] > div:nth-child(2) button span span { display: none !important; }
+      [data-reveal="eq-copy"] > div:last-child button > span:last-child,
+      [data-reveal="lyr-copy"] > div:nth-child(2) button > span:last-child { display: none !important; }
+      /* Nota redundante bajo los chips de letras */
+      [data-reveal="lyr-copy"] > p { display: none !important; }
       /* Titulares un poco más contenidos para que respiren */
       h1 { font-size: clamp(40px, 11vw, 56px) !important; }
       h2 { font-size: clamp(27px, 7.5vw, 36px) !important; }
