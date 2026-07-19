@@ -138,11 +138,11 @@
       </h1>
       <!-- REEMPLAZA: eslogan principal -->
       <p style="margin:0;font-size:clamp(19px,2.4vw,24px);line-height:1.45;color:#c3d4d0;max-width:34ch">
-        Sonido <strong style="color:#ffffff">bit-perfect</strong>. Cada nota llega a tus oídos exactamente como fue grabada.
+        Sonido <strong style="color:#ffffff">bit-perfect</strong> con tu DAC USB. Cada nota llega a tus oídos exactamente como fue grabada.
       </p>
       <!-- REEMPLAZA: descripción corta -->
       <p style="margin:0;font-size:15px;line-height:1.7;color:#8fa5a1;max-width:46ch">
-        Tu biblioteca local, sin recompresión ni remuestreo. FLAC, DSD, ALAC y prácticamente cualquier formato, reproducidos con fidelidad absoluta.
+        Tu biblioteca local, reproducida a la frecuencia nativa de cada archivo. FLAC, DSD, ALAC y prácticamente cualquier formato, con fidelidad absoluta.
       </p>
       <div id="descargar" style="display:flex;flex-wrap:wrap;gap:14px;margin-top:6px">
         <!-- REEMPLAZA: cuando la app esté publicada, vuelve a poner href con el enlace real de Google Play y cambia "Próximamente en" por "Disponible en" -->
@@ -159,7 +159,7 @@
         </sc-if>
       </div>
       <div class="hero-stats" style="display:flex;gap:28px;flex-wrap:wrap;color:#7d938f;font-size:13px">
-        <span><strong style="color:#e8f0ee;font-size:16px">32-bit</strong> / 384 kHz</span>
+        <span>hasta <strong style="color:#e8f0ee;font-size:16px">32-bit</strong> / 384 kHz</span>
         <span><strong style="color:#e8f0ee;font-size:16px">DSD</strong> nativo</span>
         <span><strong style="color:#e8f0ee;font-size:16px">0</strong> anuncios</span>
       </div>
@@ -318,19 +318,19 @@
         <span style="font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:600">Letras</span>
         <!-- REEMPLAZA: refrán / titular si prefieres otro -->
         <h2 style="margin:0;font-size:clamp(30px,4.4vw,48px);font-weight:800;letter-spacing:-.02em;line-height:1.1">Si tu música no trae letra, <span style="color:var(--accent)">Filia la encuentra</span></h2>
-        <p style="margin:0;color:#8fa5a1;font-size:16px;line-height:1.7">Un solo toque basta. Filia consulta su biblioteca integrada de letras, encuentra la de tu canción y la sincroniza línea a línea — sin descargar nada aparte, sin apps de terceros, sin salir del reproductor.</p>
+        <p style="margin:0;color:#8fa5a1;font-size:16px;line-height:1.7">Un solo toque basta. Filia consulta su biblioteca integrada de letras, encuentra la de tu canción y la sincroniza palabra por palabra — sin descargar nada aparte, sin apps de terceros, sin salir del reproductor.</p>
       </div>
       <div style="display:flex;flex-direction:column;gap:14px">
         <button ref="{{ lyrBtnSyncRef }}" onClick="{{ lyrShowSync }}" style="text-align:left;font-family:inherit;cursor:pointer;border-radius:18px;padding:20px 22px;display:flex;flex-direction:column;gap:6px;border:1px solid var(--accent);background:var(--accent-soft);transition:border-color .3s ease, background .3s ease">
-          <span style="font-weight:700;font-size:17px;color:#e8f0ee">Letra sincronizada <span style="color:var(--accent)">· línea a línea (LRC)</span></span>
-          <span style="font-size:13.5px;color:#8fa5a1;line-height:1.6">Cada verso se ilumina en el momento exacto en que suena, estilo karaoke. Ideal para cantar y seguir la canción.</span>
+          <span style="font-weight:700;font-size:17px;color:#e8f0ee">Letra sincronizada <span style="color:var(--accent)">· palabra por palabra</span></span>
+          <span style="font-size:13.5px;color:#8fa5a1;line-height:1.6">Cada palabra se ilumina en el momento exacto en que suena — karaoke de verdad. Ideal para cantar y seguir la canción.</span>
         </button>
         <button ref="{{ lyrBtnParaRef }}" onClick="{{ lyrShowPara }}" style="text-align:left;font-family:inherit;cursor:pointer;border-radius:18px;padding:20px 22px;display:flex;flex-direction:column;gap:6px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.02);transition:border-color .3s ease, background .3s ease">
           <span style="font-weight:700;font-size:17px;color:#e8f0ee">Letra por estrofas <span style="color:var(--accent)">· sincronización por bloques</span></span>
           <span style="font-size:13.5px;color:#8fa5a1;line-height:1.6">La letra avanza párrafo por párrafo, con la estrofa activa resaltada. Perfecta para leer con calma el texto completo.</span>
         </button>
         <button ref="{{ lyrBtnTransRef }}" onClick="{{ lyrShowTrans }}" style="text-align:left;font-family:inherit;cursor:pointer;border-radius:18px;padding:20px 22px;display:flex;flex-direction:column;gap:6px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.02);transition:border-color .3s ease, background .3s ease">
-          <span style="font-weight:700;font-size:17px;color:#e8f0ee">Traducción integrada <span style="color:var(--accent)">· en tiempo real</span></span>
+          <span style="font-weight:700;font-size:17px;color:#e8f0ee">Traducción integrada <span style="color:var(--accent)">· al instante</span></span>
           <span style="font-size:13.5px;color:#8fa5a1;line-height:1.6">Traduce la letra a tu idioma sin salir del reproductor, manteniendo la sincronización. Entiende cada verso mientras suena.</span>
         </button>
       </div>
@@ -473,7 +473,7 @@
       <sc-if value="{{ noFmtDetail }}" hint-placeholder-val="{{ true }}">
         <p style="margin:0;color:#5f7571;font-size:13px">Toca cualquier formato para ver su ficha técnica.</p>
       </sc-if>
-      <p data-reveal="fmt-note" style="margin:0;color:#5f7571;font-size:13px;opacity:0;transform:translateY(24px);transition:opacity .7s ease, transform .7s ease">…y muchos más: APE, TTA, Musepack, TAK, módulos tracker y todo lo que FFmpeg sepa decodificar.</p>
+      <p data-reveal="fmt-note" style="margin:0;color:#5f7571;font-size:13px;opacity:0;transform:translateY(24px);transition:opacity .7s ease, transform .7s ease">…y muchos más: APE, TTA, Musepack, TAK, DST y todo lo que FFmpeg sepa decodificar.</p>
     </div>
   </div>
 </section>
@@ -560,10 +560,10 @@ class Component extends DCLogic {
       galPrev: () => this.gal && this.gal.scrollBy({ left: -300, behavior: 'smooth' }),
       galNext: () => this.gal && this.gal.scrollBy({ left: 300, behavior: 'smooth' }),
       features: [
-        { id: 'f-bit', glyph: '≡', title: 'Salida bit-perfect', body: 'Directo al DAC sin que el sistema toque una sola muestra. Sin remuestreo, sin mezclador: el flujo original, intacto.' },
+        { id: 'f-bit', glyph: '≡', title: 'Salida bit-perfect por USB', body: 'Con un DAC USB en modo exclusivo, el audio va directo sin que el sistema toque una sola muestra: sin remuestreo, sin mezclador, el flujo original intacto.' },
         { id: 'f-ffm', glyph: '∞', title: 'Cualquier formato, gracias a FFmpeg', body: 'FLAC, ALAC, DSD, WavPack, Opus, AIFF… si FFmpeg lo decodifica, Filia lo reproduce. Tu colección completa, sin convertir nada.' },
         { id: 'f-eq', glyph: '∿', title: 'Ecualizador avanzado', body: 'EQ paramétrico de precisión con perfiles por dispositivo de salida. Ajusta cada banda o deja tu música tal cual.' },
-        { id: 'f-lyr', glyph: '“', title: 'Letras sincronizadas y traducidas', body: 'Letras en tiempo real, línea a línea, con traducción integrada para cantar en cualquier idioma.' },
+        { id: 'f-lyr', glyph: '“', title: 'Letras sincronizadas y traducidas', body: 'Letras sincronizadas palabra por palabra, con traducción integrada para cantar en cualquier idioma.' },
         { id: 'f-sta', glyph: '#', title: 'Tu resumen musical', body: 'Estadísticas de escucha privadas y locales: canciones, horas y artistas top de cada mes. Tus datos nunca salen del dispositivo.' },
         { id: 'f-gap', glyph: '→', title: 'Reproducción sin pausas', body: 'Gapless real entre pistas y crossfade opcional. Los álbumes en vivo y conceptuales suenan como deben: continuos.' }
       ],
