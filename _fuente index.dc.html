@@ -162,6 +162,7 @@
         <span>hasta <strong style="color:#e8f0ee;font-size:16px">32-bit</strong> / 384 kHz</span>
         <span><strong style="color:#e8f0ee;font-size:16px">DSD</strong> nativo</span>
         <span><strong style="color:#e8f0ee;font-size:16px">0</strong> anuncios</span>
+        <span><strong style="color:#e8f0ee;font-size:16px">10</strong> idiomas</span>
       </div>
     </div>
 
@@ -381,7 +382,7 @@
       <h2 style="margin:0;font-size:clamp(30px,4.4vw,48px);font-weight:800;letter-spacing:-.02em;line-height:1.1">Diseñado para oídos exigentes</h2>
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px">
-      <sc-for list="{{ features }}" as="f" hint-placeholder-count="6">
+      <sc-for list="{{ features }}" as="f" hint-placeholder-count="9">
         <div data-reveal="{{ f.id }}" style="border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:28px;background:rgba(255,255,255,.02);display:flex;flex-direction:column;gap:16px;opacity:0;transform:translateY(24px);transition:opacity .7s ease, transform .7s ease, border-color .3s ease, background .3s ease" style-hover="border-color:rgba(31,191,174,.45);background:rgba(31,191,174,.05)">
           <span style="width:46px;height:46px;border-radius:13px;background:var(--accent-soft);border:1px solid rgba(31,191,174,.3);display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:20px;font-weight:800">{{ f.glyph }}</span>
           <h3 style="margin:0;font-size:19px;font-weight:700">{{ f.title }}</h3>
@@ -562,10 +563,13 @@ class Component extends DCLogic {
       features: [
         { id: 'f-bit', glyph: '≡', title: 'Salida bit-perfect por USB', body: 'Con un DAC USB en modo exclusivo, el audio va directo sin que el sistema toque una sola muestra: sin remuestreo, sin mezclador, el flujo original intacto.' },
         { id: 'f-ffm', glyph: '∞', title: 'Cualquier formato, gracias a FFmpeg', body: 'FLAC, ALAC, DSD, WavPack, Opus, AIFF… si FFmpeg lo decodifica, Filia lo reproduce. Tu colección completa, sin convertir nada.' },
-        { id: 'f-eq', glyph: '∿', title: 'Ecualizador avanzado', body: 'EQ paramétrico de precisión con perfiles por dispositivo de salida. Ajusta cada banda o deja tu música tal cual.' },
+        { id: 'f-eq', glyph: '∿', title: 'Ecualizador avanzado', body: 'EQ paramétrico de precisión, crossfeed para auriculares, balance y tus propios presets guardados. Ajusta cada banda o deja tu música tal cual.' },
         { id: 'f-lyr', glyph: '“', title: 'Letras sincronizadas y traducidas', body: 'Letras sincronizadas palabra por palabra, con traducción integrada para cantar en cualquier idioma.' },
-        { id: 'f-sta', glyph: '#', title: 'Tu resumen musical', body: 'Estadísticas de escucha privadas y locales: canciones, horas y artistas top de cada mes. Tus datos nunca salen del dispositivo.' },
-        { id: 'f-gap', glyph: '→', title: 'Reproducción sin pausas', body: 'Gapless real entre pistas y crossfade opcional. Los álbumes en vivo y conceptuales suenan como deben: continuos.' }
+        { id: 'f-wave', glyph: '≈', title: 'Onda y espectro reales', body: 'La forma de onda de la canción es tu barra de progreso, y el analizador muestra el espectro con FFT de verdad — no una animación de adorno.' },
+        { id: 'f-rg', glyph: '±', title: 'Volumen inteligente', body: 'ReplayGain nivela el volumen entre canciones leyendo los tags del archivo, y el salto de silencios recorta intros y finales vacíos.' },
+        { id: 'f-gap', glyph: '→', title: 'Reproducción sin pausas', body: 'Gapless real entre pistas y crossfade opcional. Los álbumes en vivo y conceptuales suenan como deben: continuos.' },
+        { id: 'f-sta', glyph: '#', title: 'Tu resumen musical', body: 'Estadísticas de escucha y recomendaciones por afinidad, calculadas en tu propio dispositivo: canciones, horas y artistas top de cada mes.' },
+        { id: 'f-priv', glyph: '∅', title: 'Privacidad de verdad', body: 'Sin cuentas, sin registro, sin rastreadores: tu música y tus datos de escucha nunca salen del dispositivo.' }
       ],
       shots: [
         // REEMPLAZA / AÑADE: tus capturas de pantalla (id único por slot)
@@ -590,7 +594,7 @@ class Component extends DCLogic {
       'WavPack': { name: 'WavPack', fullName: 'WavPack Hybrid Lossless', sampleRate: 'hasta 384 kHz', bitDepth: '8 – 32 bits (int y float)', bitrate: '~700 – 1.300 kbps', compression: 'Sin pérdida o híbrida', note: 'Único por su modo híbrido: un archivo con pérdida pequeño más un archivo de corrección que restaura la calidad sin pérdida completa. Soporta incluso DSD.' },
       'WAV': { name: 'WAV', fullName: 'Waveform Audio File Format', sampleRate: 'hasta 384 kHz', bitDepth: '8 – 32 bits', bitrate: '1.411 kbps (CD)', compression: 'Sin comprimir (PCM)', note: 'Audio PCM puro, sin ninguna compresión. Es el formato de estudio por excelencia: máxima compatibilidad y cero procesamiento, a cambio de archivos grandes.' },
       'AIFF': { name: 'AIFF', fullName: 'Audio Interchange File Format', sampleRate: 'hasta 384 kHz', bitDepth: '8 – 32 bits', bitrate: '1.411 kbps (CD)', compression: 'Sin comprimir (PCM)', note: 'El equivalente de Apple al WAV: PCM sin comprimir con mejor soporte de metadatos y carátulas. Común en producción musical sobre macOS.' },
-      'DSD64': { name: 'DSD64', fullName: 'Direct Stream Digital (SACD)', sampleRate: '2,8224 MHz', bitDepth: '1 bit', bitrate: '5.645 kbps (estéreo)', compression: 'Sin comprimir', note: 'El formato del Super Audio CD: 1 bit muestreado 64 veces más rápido que un CD. Sonido analógico y natural, favorito de los audiófilos puristas.' },
+      'DSD64': { name: 'DSD64', fullName: 'Direct Stream Digital (SACD)', sampleRate: '2,8224 MHz', bitDepth: '1 bit', bitrate: '5.645 kbps (estéreo)', compression: 'Sin comprimir', note: 'El formato del Super Audio CD: 1 bit muestreado 64 veces más rápido que un CD. Sonido analógico y natural, favorito de los audiófilos puristas. Filia lo envía en DoP a tu DAC USB para reproducción nativa.' },
       'DSD128': { name: 'DSD128', fullName: 'Direct Stream Digital 2x', sampleRate: '5,6448 MHz', bitDepth: '1 bit', bitrate: '11.290 kbps (estéreo)', compression: 'Sin comprimir', note: 'El doble de resolución que DSD64, con el ruido de cuantización desplazado aún más lejos del rango audible. Habitual en grabaciones audiófilas modernas.' },
       'DSD256': { name: 'DSD256', fullName: 'Direct Stream Digital 4x', sampleRate: '11,2896 MHz', bitDepth: '1 bit', bitrate: '22.580 kbps (estéreo)', compression: 'Sin comprimir', note: 'Cuatro veces la resolución del SACD — el nivel usado en estudios de masterización DSD. Requiere un DAC compatible para reproducción nativa.' },
       'DXD': { name: 'DXD', fullName: 'Digital eXtreme Definition', sampleRate: '352,8 kHz', bitDepth: '24 – 32 bits', bitrate: '~8.467 kbps', compression: 'Sin comprimir (PCM)', note: 'PCM de resolución extrema creado para editar grabaciones DSD en estudio. Ofrece la transparencia del DSD con la flexibilidad de edición del PCM.' },
