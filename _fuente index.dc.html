@@ -38,6 +38,13 @@
     /* Grano de fondo (textura analógica sutil, tipo vinilo) — estático, sin coste de animación */
     #grain-overlay { position: fixed; inset: 0; pointer-events: none; z-index: 9999; opacity: .06;
       background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='140'%20height='140'%3E%3Cfilter%20id='n'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.82'%20numOctaves='2'%20stitchTiles='stitch'/%3E%3CfeColorMatrix%20type='saturate'%20values='0'/%3E%3C/filter%3E%3Crect%20width='140'%20height='140'%20filter='url(%23n)'/%3E%3C/svg%3E"); }
+    /* Lightbox de capturas: ampliar al tocar */
+    #lightbox { position: fixed; inset: 0; z-index: 10000; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 6vh 20px; background: rgba(3,6,6,.88); backdrop-filter: blur(10px); cursor: zoom-out; opacity: 0; transition: opacity .25s ease; }
+    #lightbox.open { display: flex; opacity: 1; }
+    #lightbox img { max-height: 82vh; max-width: min(400px, 90vw); border-radius: 30px; box-shadow: 0 30px 90px rgba(0,0,0,.75); animation: lbZoom .28s cubic-bezier(.2,.8,.2,1); }
+    #lightbox .lb-cap { color: #c3d4d0; font-size: 14px; text-align: center; }
+    #lightbox .lb-x { position: fixed; top: 18px; right: 22px; width: 46px; height: 46px; border-radius: 50%; border: 1px solid rgba(255,255,255,.22); background: rgba(0,0,0,.35); color: #fff; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+    @keyframes lbZoom { from { transform: scale(.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
     @keyframes pulseRing { 0% { box-shadow: 0 0 0 0 rgba(31,191,174,.45); } 100% { box-shadow: 0 0 0 26px rgba(31,191,174,0); } }
     @keyframes drift { 0% { transform: translate(0,0); } 50% { transform: translate(40px,-30px); } 100% { transform: translate(0,0); } }
@@ -386,8 +393,8 @@
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px">
       <sc-for list="{{ features }}" as="f" hint-placeholder-count="9">
-        <div data-reveal="{{ f.id }}" style="border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:28px;background:rgba(255,255,255,.02);display:flex;flex-direction:column;gap:16px;opacity:0;transform:translateY(24px);transition:opacity .7s ease, transform .7s ease, border-color .3s ease, background .3s ease" style-hover="border-color:rgba(31,191,174,.45);background:rgba(31,191,174,.05)">
-          <span style="width:46px;height:46px;border-radius:13px;background:var(--accent-soft);border:1px solid rgba(31,191,174,.3);display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:20px;font-weight:800">{{ f.glyph }}</span>
+        <div data-reveal="{{ f.id }}" style="border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:28px;background:linear-gradient(160deg, rgba(31,191,174,.05), rgba(255,255,255,.015) 55%);display:flex;flex-direction:column;gap:16px;opacity:0;transform:translateY(24px);transition:opacity .7s ease, transform .7s ease, border-color .3s ease, background .3s ease, box-shadow .3s ease" style-hover="border-color:rgba(31,191,174,.5);background:linear-gradient(160deg, rgba(31,191,174,.1), rgba(255,255,255,.02) 55%);box-shadow:0 18px 44px rgba(0,0,0,.35)">
+          <span style="width:50px;height:50px;border-radius:14px;background:linear-gradient(150deg, rgba(31,191,174,.28), rgba(31,191,174,.08));border:1px solid rgba(31,191,174,.4);box-shadow:inset 0 1px 0 rgba(255,255,255,.12), 0 8px 20px rgba(31,191,174,.12);display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:22px;font-weight:800">{{ f.glyph }}</span>
           <h3 style="margin:0;font-size:19px;font-weight:700">{{ f.title }}</h3>
           <p style="margin:0;color:#8fa5a1;font-size:14px;line-height:1.7">{{ f.body }}</p>
         </div>
@@ -634,6 +641,7 @@ class Component extends DCLogic {
       document.body.appendChild(g);
     }
     this.setupReveal();
+    this.bindLightbox();
     // El template puede seguir montándose tras el primer mount: re-observa
     // hasta encontrar todos los nodos [data-reveal] (con reintentos).
     let tries = 0;
@@ -689,6 +697,46 @@ class Component extends DCLogic {
     });
     this.setupReveal();
     this.updateScrollSpy();
+    this.bindLightbox();
+  }
+
+  // ---------- Lightbox de capturas ----------
+  bindLightbox() {
+    document.querySelectorAll('[data-reveal="gal-row"] img').forEach((im) => {
+      if (im.__lb) return;
+      im.__lb = true;
+      im.style.cursor = 'zoom-in';
+      im.addEventListener('click', () => this.openLightbox(im.getAttribute('src'), im.getAttribute('alt') || ''));
+    });
+  }
+
+  openLightbox(src, caption) {
+    let ov = document.getElementById('lightbox');
+    if (!ov) {
+      ov = document.createElement('div');
+      ov.id = 'lightbox';
+      ov.addEventListener('click', () => this.closeLightbox());
+      document.body.appendChild(ov);
+    }
+    ov.textContent = '';
+    const img = document.createElement('img');
+    img.src = src; img.alt = caption;
+    const cap = document.createElement('div');
+    cap.className = 'lb-cap'; cap.textContent = caption;
+    const x = document.createElement('button');
+    x.className = 'lb-x'; x.setAttribute('aria-label', 'Cerrar'); x.textContent = '✕';
+    ov.appendChild(x); ov.appendChild(img); ov.appendChild(cap);
+    ov.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    this._lbEsc = (e) => { if (e.key === 'Escape') this.closeLightbox(); };
+    document.addEventListener('keydown', this._lbEsc);
+  }
+
+  closeLightbox() {
+    const ov = document.getElementById('lightbox');
+    if (ov) ov.classList.remove('open');
+    document.body.style.overflow = '';
+    if (this._lbEsc) { document.removeEventListener('keydown', this._lbEsc); this._lbEsc = null; }
   }
 
   applyAccent(hex) {
