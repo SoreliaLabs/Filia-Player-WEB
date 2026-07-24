@@ -421,12 +421,19 @@
     <div ref="{{ galRef }}" data-reveal="gal-row" style="display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x proximity;overscroll-behavior-x:contain;padding:20px clamp(20px,5vw,64px) 34px;scrollbar-width:none;opacity:0;transform:translateY(24px);transition:opacity .8s ease .1s, transform .8s ease .1s">
       <sc-for list="{{ shots }}" as="s" hint-placeholder-count="5">
         <div style="flex:0 0 auto;scroll-snap-align:center;display:flex;flex-direction:column;gap:14px;align-items:center;transition:transform .35s ease" style-hover="transform:translateY(-10px) scale(1.02)">
-          <div style="width:min(250px,68vw);aspect-ratio:1/2;border-radius:30px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.55)">
+          <div style="width:min(275px,70vw);aspect-ratio:1/2;border-radius:30px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.55)">
             <img src="{{ s.src }}" alt="{{ s.caption }}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block">
           </div>
           <span style="font-size:13px;color:#8fa5a1">{{ s.caption }}</span>
         </div>
       </sc-for>
+    </div>
+
+    <!-- Barra de progreso deslizable del carrusel -->
+    <div style="max-width:1180px;margin:0 auto;width:100%;padding:0 clamp(20px,5vw,64px);box-sizing:border-box">
+      <div ref="{{ galBarRef }}" style="position:relative;height:5px;border-radius:999px;background:rgba(255,255,255,.1);cursor:pointer;touch-action:none">
+        <div ref="{{ galBarFillRef }}" style="position:absolute;left:0;top:0;height:100%;width:40px;border-radius:999px;background:var(--accent);will-change:transform"></div>
+      </div>
     </div>
   </div>
 </section>
@@ -564,7 +571,32 @@ class Component extends DCLogic {
       lyrShowSync: () => this.setLyrMode('sync'),
       lyrShowPara: () => this.setLyrMode('para'),
       lyrShowTrans: () => this.setLyrMode('trans'),
-      galRef: (el) => { this.gal = el; },
+      galRef: (el) => {
+        this.gal = el;
+        if (el && !el.__barBound) {
+          el.__barBound = true;
+          el.addEventListener('scroll', () => this.updateGalBar(), { passive: true });
+        }
+      },
+      galBarRef: (el) => {
+        this.galBar = el;
+        if (el && !el.__dragBound) {
+          el.__dragBound = true;
+          const seek = (clientX) => {
+            if (!this.gal) return;
+            const r = el.getBoundingClientRect();
+            const thumbW = Math.max(40, r.width * (this.gal.clientWidth / this.gal.scrollWidth));
+            let ratio = (clientX - r.left - thumbW / 2) / Math.max(1, r.width - thumbW);
+            ratio = Math.max(0, Math.min(1, ratio));
+            this.gal.scrollLeft = ratio * (this.gal.scrollWidth - this.gal.clientWidth);
+          };
+          el.addEventListener('pointerdown', (e) => { this._galDrag = true; try { el.setPointerCapture(e.pointerId); } catch (_) {} seek(e.clientX); });
+          el.addEventListener('pointermove', (e) => { if (this._galDrag) seek(e.clientX); });
+          el.addEventListener('pointerup', () => { this._galDrag = false; });
+          el.addEventListener('pointercancel', () => { this._galDrag = false; });
+        }
+      },
+      galBarFillRef: (el) => { this.galBarFill = el; setTimeout(() => this.updateGalBar(), 0); },
       vizRef: (el) => { if (el && el !== this.viz) { this.viz = el; this.drawIdle(); } },
       vizLabelRef: (el) => { this.vizLabel = el; },
       demoTracks: this.demoTracks(),
@@ -642,6 +674,9 @@ class Component extends DCLogic {
     }
     this.setupReveal();
     this.bindLightbox();
+    this.onResizeBar = () => this.updateGalBar();
+    window.addEventListener('resize', this.onResizeBar, { passive: true });
+    setTimeout(() => this.updateGalBar(), 300);
     // El template puede seguir montándose tras el primer mount: re-observa
     // hasta encontrar todos los nodos [data-reveal] (con reintentos).
     let tries = 0;
@@ -698,6 +733,17 @@ class Component extends DCLogic {
     this.setupReveal();
     this.updateScrollSpy();
     this.bindLightbox();
+  }
+
+  // ---------- Barra de progreso del carrusel de capturas ----------
+  updateGalBar() {
+    if (!this.gal || !this.galBar || !this.galBarFill) return;
+    const trackW = this.galBar.clientWidth;
+    const scrollable = this.gal.scrollWidth - this.gal.clientWidth;
+    const thumbW = Math.max(40, trackW * (this.gal.clientWidth / this.gal.scrollWidth));
+    const ratio = scrollable > 0 ? this.gal.scrollLeft / scrollable : 0;
+    this.galBarFill.style.width = thumbW + 'px';
+    this.galBarFill.style.transform = 'translateX(' + (ratio * (trackW - thumbW)) + 'px)';
   }
 
   // ---------- Lightbox de capturas ----------
@@ -1026,6 +1072,7 @@ class Component extends DCLogic {
     clearInterval(this.revealPoll);
     clearTimeout(this.revealSafety);
     window.removeEventListener('scroll', this.onScrollSpy);
+    if (this.onResizeBar) window.removeEventListener('resize', this.onResizeBar);
     cancelAnimationFrame(this.spyRaf);
     cancelAnimationFrame(this.raf);
     Object.values(this.audios || {}).forEach((a) => a.pause());
