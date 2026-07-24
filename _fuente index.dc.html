@@ -35,6 +35,9 @@
     a { color: var(--accent); text-decoration: none; }
     a:hover { color: #7fe6da; }
     ::selection { background: var(--accent); color: #06110f; }
+    /* Grano de fondo (textura analógica sutil, tipo vinilo) — estático, sin coste de animación */
+    #grain-overlay { position: fixed; inset: 0; pointer-events: none; z-index: 9999; opacity: .06;
+      background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='140'%20height='140'%3E%3Cfilter%20id='n'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.82'%20numOctaves='2'%20stitchTiles='stitch'/%3E%3CfeColorMatrix%20type='saturate'%20values='0'/%3E%3C/filter%3E%3Crect%20width='140'%20height='140'%20filter='url(%23n)'/%3E%3C/svg%3E"); }
     @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
     @keyframes pulseRing { 0% { box-shadow: 0 0 0 0 rgba(31,191,174,.45); } 100% { box-shadow: 0 0 0 26px rgba(31,191,174,0); } }
     @keyframes drift { 0% { transform: translate(0,0); } 50% { transform: translate(40px,-30px); } 100% { transform: translate(0,0); } }
@@ -624,6 +627,12 @@ class Component extends DCLogic {
   componentDidMount() {
     const accent = this.props.accentColor ?? '#1fbfae';
     this.applyAccent(accent);
+    // Capa de grano: se cuelga del body para sobrevivir a los re-renders del framework
+    if (!document.getElementById('grain-overlay')) {
+      const g = document.createElement('div');
+      g.id = 'grain-overlay';
+      document.body.appendChild(g);
+    }
     this.setupReveal();
     // El template puede seguir montándose tras el primer mount: re-observa
     // hasta encontrar todos los nodos [data-reveal] (con reintentos).
